@@ -1,0 +1,10 @@
+langchain
+langchain-google-genai
+langchain-core
+langchain-community
+langgraph
+python-dotenv
+requests
+faiss-cpu
+pypdf
+ 
