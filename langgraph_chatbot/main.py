@@ -5,16 +5,14 @@ from langgraph.graph import StateGraph, MessagesState, START, END
 from langchain_core.messages import HumanMessage, AIMessage
 
 load_dotenv()
-
-# ── LLM Setup ──────────────────────────────────────────────────────────────
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 
-# ── Graph Node ─────────────────────────────────────────────────────────────
+
 def call_model(state: MessagesState):
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
-# ── Build Graph ────────────────────────────────────────────────────────────
+
 graph = StateGraph(MessagesState)
 graph.add_node("model", call_model)
 graph.add_edge(START, "model")
@@ -22,7 +20,6 @@ graph.add_edge("model", END)
 
 app = graph.compile()
 
-# ── Conversation Memory ────────────────────────────────────────────────────
 conversation_history = []
 
 def chat(user_input: str) -> str:
@@ -43,10 +40,10 @@ def reset_conversation():
     conversation_history = []
     print("🔄 Conversation reset.\n")
 
-# ── Interactive CLI Chat Loop ──────────────────────────────────────────────
+
 def main():
     print("=" * 55)
-    print("        🤖  LangGraph + Gemini Chatbot")
+    print("          LangGraph + Gemini Chatbot")
     print("=" * 55)
     print("Commands:  'quit' or 'exit' → stop")
     print("           'reset'          → clear history")
@@ -57,7 +54,7 @@ def main():
         try:
             user_input = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            print("\n\nGoodbye! 👋")
+            print("\n\nGoodbye! ")
             break
 
         if not user_input:
